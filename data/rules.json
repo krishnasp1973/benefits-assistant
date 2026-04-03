@@ -17,61 +17,37 @@
         "family_of_4": "$41,400/year or less (2024)"
       },
       "what_it_covers": [
-        "Doctor visits",
-        "Hospital stays",
-        "Prescription drugs",
-        "Mental health services",
-        "Preventive care",
-        "Emergency services",
-        "Lab tests and X-rays"
+        "Doctor visits", "Hospital stays", "Prescription drugs",
+        "Mental health services", "Preventive care", "Emergency services"
       ],
       "how_to_apply": "Apply through your state's Medicaid agency or at healthcare.gov"
     },
     "aca_marketplace": {
       "name": "ACA Health Insurance Marketplace",
-      "description": "Subsidized private insurance plans for people who don't qualify for Medicaid but need affordable coverage",
-      "federal_poverty_level_range": "100% to 400% FPL (subsidies available; some states extended to higher incomes)",
+      "description": "Subsidized private insurance plans for people who don't qualify for Medicaid",
+      "federal_poverty_level_range": "100% to 400% FPL",
       "eligibility_rules": [
         "Must be a U.S. citizen or qualifying immigrant",
         "Must not have access to affordable employer-sponsored insurance",
         "Income between 100% and 400% FPL qualifies for premium tax credits",
-        "Income above 400% FPL can still purchase marketplace plans (no subsidy)",
-        "Must not be eligible for Medicaid or Medicare",
-        "Open enrollment is typically November 1 – January 15",
-        "Special enrollment periods available for life events (job loss, marriage, birth of child)"
+        "Open enrollment is typically November 1 to January 15",
+        "Special enrollment periods available for life events"
       ],
       "income_examples": {
-        "individual_subsidy_range": "$14,580 – $58,320/year (2024)",
-        "family_of_4_subsidy_range": "$30,000 – $120,000/year (2024)"
+        "individual_subsidy_range": "$14,580 to $58,320/year (2024)",
+        "family_of_4_subsidy_range": "$30,000 to $120,000/year (2024)"
       },
-      "subsidy_types": [
-        "Premium Tax Credit (PTC): reduces monthly premium cost",
-        "Cost-Sharing Reduction (CSR): lowers deductibles and copays (only on Silver plans)"
-      ],
-      "how_to_apply": "Apply at healthcare.gov during open enrollment or a special enrollment period"
+      "how_to_apply": "Apply at healthcare.gov during open enrollment"
     },
     "chip": {
       "name": "Children's Health Insurance Program (CHIP)",
-      "description": "Low-cost health coverage for children in families that earn too much for Medicaid but cannot afford private insurance",
+      "description": "Low-cost health coverage for children in families that earn too much for Medicaid",
       "age_range": "Under 19 years old",
-      "federal_poverty_level_threshold": "Up to 200% FPL in most states (some states go higher)",
+      "federal_poverty_level_threshold": "Up to 200% FPL in most states",
       "eligibility_rules": [
         "Child must be under 19 years old",
-        "Family income is too high for Medicaid but cannot afford private insurance",
-        "Most states cover children up to 200% FPL; some up to 300% or higher",
-        "Child must be a U.S. citizen or qualifying immigrant",
-        "Pregnant women may also qualify for CHIP in some states"
-      ],
-      "income_examples": {
-        "family_of_4": "Roughly $60,000/year or less in most states (varies by state)"
-      },
-      "what_it_covers": [
-        "Routine checkups",
-        "Immunizations",
-        "Doctor and dentist visits",
-        "Hospital care",
-        "Mental health services",
-        "Vision and hearing care"
+        "Most states cover children up to 200% FPL",
+        "Child must be a U.S. citizen or qualifying immigrant"
       ],
       "how_to_apply": "Apply through your state's CHIP program or at insurekidsnow.gov"
     }
@@ -82,19 +58,37 @@
     "household_size_3": 24860,
     "household_size_4": 30000,
     "household_size_5": 35140,
-    "household_size_6": 40280,
-    "note": "These are continental U.S. figures. Alaska and Hawaii have higher thresholds."
+    "household_size_6": 40280
   },
-  "common_questions": [
-    "What is the income limit for Medicaid?",
-    "Do I qualify for Medicaid?",
-    "What is the ACA Marketplace?",
-    "How do I get health insurance if I lost my job?",
-    "Can my child get CHIP coverage?",
-    "What is the difference between Medicaid and the ACA?",
-    "When is open enrollment?",
-    "What does Medicaid cover?",
-    "What are premium tax credits?",
-    "I'm pregnant — what health coverage do I qualify for?"
-  ]
+  "source_urls": {
+    "general_eligibility": [
+      "https://www.healthcare.gov/medicaid-chip/eligibility/",
+      "https://www.medicaid.gov/medicaid/eligibility/index.html"
+    ],
+    "aca_marketplace": [
+      "https://www.healthcare.gov/glossary/health-insurance-marketplace/",
+      "https://www.healthcare.gov/lower-costs/"
+    ],
+    "chip": [
+      "https://www.insurekidsnow.gov/coverage/index.html"
+    ],
+    "new_york": [
+      "https://info.nystateofhealth.ny.gov/stay-covered",
+      "https://www.health.ny.gov/health_care/medicaid/"
+    ],
+    "community_engagement": [
+      "https://info.nystateofhealth.ny.gov/stay-covered",
+      "https://www.medicaid.gov/medicaid/section-1115-demo/index.html"
+    ],
+    "open_enrollment": [
+      "https://www.healthcare.gov/quick-guide/dates-and-deadlines/"
+    ],
+    "pregnancy": [
+      "https://www.healthcare.gov/what-if-im-pregnant-or-plan-to-get-pregnant/",
+      "https://www.medicaid.gov/medicaid/benefits/pregnancy/index.html"
+    ],
+    "job_loss": [
+      "https://www.healthcare.gov/have-job-based-coverage/if-you-lose-job-based-coverage/"
+    ]
+  }
 }

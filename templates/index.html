@@ -4,84 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benefits Eligibility Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div class="layout">
 
-  <div class="app-container">
-   
-    <!-- Header -->
-    <header class="app-header">
-      <div class="header-content">
-        <div class="header-icon">⚕</div>
-        <div>
-          <h1>Benefits Eligibility Assistant</h1>
-          <p class="header-subtitle">Ask questions about Medicaid, ACA Marketplace, and CHIP coverage</p>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <span class="brand-name">BenefitsAI</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">Quick topics</p>
+        <button class="nav-item active" onclick="askQuestion('What are the income limits for Medicaid in 2024?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Medicaid eligibility
+        </button>
+        <button class="nav-item" onclick="askQuestion('What is the difference between Medicaid and ACA Marketplace plans?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Medicaid vs ACA
+        </button>
+        <button class="nav-item" onclick="askQuestion('Can my child get CHIP coverage and what does it cover?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          CHIP for children
+        </button>
+        <button class="nav-item" onclick="askQuestion('I lost my job. What health insurance options do I have?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Lost job coverage
+        </button>
+        <button class="nav-item" onclick="askQuestion('When is ACA open enrollment and how do I apply?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Open enrollment
+        </button>
+        <button class="nav-item" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          NY 2027 requirements
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="reset-btn" onclick="resetConversation()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+          New conversation
+        </button>
+        <p class="disclaimer-small">General information only. Verify with your state agency or <a href="https://healthcare.gov" target="_blank">healthcare.gov</a>.</p>
+      </div>
+    </aside>
+
+    <!-- Main chat area -->
+    <main class="main">
+
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="topbar-title">Benefits Eligibility Assistant</h1>
+          <span class="status-badge">
+            <span class="status-dot"></span>
+            Live — powered by GPT-4
+          </span>
+        </div>
+        <div class="topbar-right">
+          <span class="coverage-tag">Medicaid</span>
+          <span class="coverage-tag">ACA</span>
+          <span class="coverage-tag">CHIP</span>
+        </div>
+      </header>
+
+      <!-- Chat window -->
+      <div class="chat-window" id="chat-window">
+        <!-- Welcome card -->
+        <div class="welcome-card">
+          <div class="welcome-header">
+            <h2 class="welcome-title">How can I help you today?</h2>
+            <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs.</p>
+          </div>
+          <div class="welcome-chips">
+            <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income & Medicaid qualification</button>
+            <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage options</button>
+            <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 community rules</button>
+            <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidy calculator</button>
+          </div>
         </div>
       </div>
-    </header>
 
-    <!-- Disclaimer banner -->
-    <div class="disclaimer">
-      ℹ️ This tool provides general information only. Always verify eligibility with your state agency or <a href="https://healthcare.gov" target="_blank">healthcare.gov</a>.
-    </div>
-
-    <!-- Quick-start question chips -->
-    <div class="quick-questions">
-      <p class="quick-label">Try asking:</p>
-      <div class="chips">
-        <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year?')">Income &amp; Medicaid</button>
-        <button class="chip" onclick="askQuestion('What is the difference between Medicaid and ACA?')">Medicaid vs ACA</button>
-        <button class="chip" onclick="askQuestion('Can my 10-year-old get CHIP coverage?')">CHIP for kids</button>
-        <button class="chip" onclick="askQuestion('I lost my job. What are my health insurance options?')">Lost job coverage</button>
-        <button class="chip" onclick="askQuestion('When is open enrollment for ACA?')">Open enrollment</button>
-      </div>
-    </div>
-
-    <!-- Chat window -->
-    <div class="chat-window" id="chat-window">
-      <!-- Welcome message -->
-      <div class="message assistant-message">
-        <div class="message-bubble">
-          <p>Hello! I'm your Benefits Eligibility Assistant. I can help you understand your options for <strong>Medicaid</strong>, <strong>ACA Marketplace</strong> plans, and <strong>CHIP</strong>.</p>
-          <p>You can ask me things like:</p>
-          <ul>
-            <li>What are the income limits for Medicaid?</li>
-            <li>Do I qualify for health insurance subsidies?</li>
-            <li>What does CHIP cover for my child?</li>
-          </ul>
-          <p>What would you like to know?</p>
+      <!-- Input area -->
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea
+            id="user-input"
+            placeholder="Ask about eligibility, income limits, enrollment, state programs..."
+            rows="1"
+            onkeydown="handleKeydown(event)"
+          ></textarea>
+          <button id="send-btn" onclick="sendMessage()" title="Send message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
         </div>
+        <p class="input-hint">Press Enter to send · Shift+Enter for new line</p>
       </div>
-    </div>
 
-    <!-- Input area -->
-    <div class="input-area">
-      <textarea
-        id="user-input"
-        placeholder="Ask about Medicaid, ACA plans, CHIP eligibility..."
-        rows="1"
-        onkeydown="handleKeydown(event)"
-      ></textarea>
-      <button id="send-btn" onclick="sendMessage()">Send</button>
-    </div>
-
-    <!-- Reset button -->
-    <div class="reset-area">
-      <button class="reset-btn" onclick="resetConversation()">↺ Start new conversation</button>
-    </div>
-
+    </main>
   </div>
 
   <script>
-    // Auto-resize textarea as user types
     const textarea = document.getElementById('user-input');
     textarea.addEventListener('input', function() {
       this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      this.style.height = Math.min(this.scrollHeight, 140) + 'px';
     });
 
-    // Send on Enter (but allow Shift+Enter for new lines)
     function handleKeydown(event) {
       if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
@@ -89,53 +129,47 @@
       }
     }
 
-    // Pre-fill a question from the quick chips
     function askQuestion(question) {
       textarea.value = question;
       sendMessage();
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     }
+
+    let messageCount = 0;
 
     function sendMessage() {
       const input = document.getElementById('user-input');
       const question = input.value.trim();
-     
       if (!question) return;
-     
-      // Add user's message to chat
+
+      // Remove welcome card on first message
+      const welcome = document.querySelector('.welcome-card');
+      if (welcome) welcome.remove();
+
       appendMessage(question, 'user');
-     
-      // Clear input
       input.value = '';
       input.style.height = 'auto';
-     
-      // Show loading indicator
+
       const loadingId = appendLoading();
-     
-      // Disable send button while waiting
       document.getElementById('send-btn').disabled = true;
-     
-      // Send question to our Flask backend
+
       fetch('/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: question })
+        body: JSON.stringify({ question })
       })
-      .then(response => response.json())
+      .then(r => r.json())
       .then(data => {
-        // Remove loading indicator
         removeLoading(loadingId);
-       
-        // Show the AI's answer
         if (data.answer) {
           appendMessage(data.answer, 'assistant', data.sources);
         } else {
-          appendMessage('Sorry, something went wrong. Please try again.', 'assistant');
+          appendMessage('Something went wrong. Please try again.', 'assistant');
         }
       })
-      .catch(error => {
+      .catch(() => {
         removeLoading(loadingId);
-        appendMessage('Connection error. Please check your internet and try again.', 'assistant');
-        console.error('Error:', error);
+        appendMessage('Connection error. Please check your server and try again.', 'assistant');
       })
       .finally(() => {
         document.getElementById('send-btn').disabled = false;
@@ -144,31 +178,64 @@
 
     function appendMessage(text, role, sources = []) {
       const chatWindow = document.getElementById('chat-window');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${role}-message`;
-     
-      const bubble = document.createElement('div');
-      bubble.className = 'message-bubble';
-     
-      const formatted = text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n/g, '<br>');
-     
-      bubble.innerHTML = formatted;
+      const id = 'msg-' + (++messageCount);
 
-      // Add sources if provided
-      if (sources && sources.length > 0) {
-        const sourcesDiv = document.createElement('div');
-        sourcesDiv.className = 'sources';
-        sourcesDiv.innerHTML = '<span class="sources-label">Sources:</span>' +
-          sources.map(s => `<a href="${s.url}" target="_blank" class="source-link">${s.label}</a>`).join('');
-        bubble.appendChild(sourcesDiv);
+      if (role === 'user') {
+        const div = document.createElement('div');
+        div.className = 'message user-message';
+        div.innerHTML = `<div class="message-bubble">${escapeHtml(text)}</div>`;
+        chatWindow.appendChild(div);
+      } else {
+        const formatted = text
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/\n/g, '<br>');
+
+        let sourcesHtml = '';
+        if (sources && sources.length > 0) {
+          sourcesHtml = `
+            <div class="sources-bar">
+              <span class="sources-label">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Sources
+              </span>
+              ${sources.map(s => `<a href="${s.url}" target="_blank" class="source-pill">${s.label}</a>`).join('')}
+            </div>`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'message assistant-message';
+        div.id = id;
+        div.innerHTML = `
+          <div class="assistant-avatar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="message-content">
+            <div class="message-bubble"><p>${formatted}</p></div>
+            ${sourcesHtml}
+            <div class="message-actions">
+              <button class="action-btn" onclick="copyMessage('${id}')" title="Copy response">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+              </button>
+              <button class="action-btn thumb-btn" onclick="thumbsUp('${id}', this)" title="Helpful">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+                Helpful
+              </button>
+              <button class="action-btn thumb-btn" onclick="thumbsDown('${id}', this)" title="Not helpful">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
+                Not helpful
+              </button>
+            </div>
+          </div>`;
+        chatWindow.appendChild(div);
       }
 
-      messageDiv.appendChild(bubble);
-      chatWindow.appendChild(messageDiv);
       chatWindow.scrollTop = chatWindow.scrollHeight;
-      return messageDiv;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
     function appendLoading() {
@@ -177,7 +244,16 @@
       const div = document.createElement('div');
       div.id = id;
       div.className = 'message assistant-message';
-      div.innerHTML = '<div class="message-bubble loading"><span></span><span></span><span></span></div>';
+      div.innerHTML = `
+        <div class="assistant-avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="message-content">
+          <div class="message-bubble loading-bubble">
+            <span class="loading-text">Searching official sources</span>
+            <span class="dots"><span></span><span></span><span></span></span>
+          </div>
+        </div>`;
       chatWindow.appendChild(div);
       chatWindow.scrollTop = chatWindow.scrollHeight;
       return id;
@@ -188,15 +264,55 @@
       if (el) el.remove();
     }
 
+    function copyMessage(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const bubble = el.querySelector('.message-bubble');
+      const text = bubble ? bubble.innerText : '';
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = el.querySelector('[onclick^="copyMessage"]');
+        if (btn) {
+          btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+            btn.classList.remove('copied');
+          }, 2000);
+        }
+      });
+    }
+
+    function thumbsUp(id, btn) {
+      btn.classList.add('voted-up');
+      btn.closest('.message-actions').querySelector('.thumb-btn:last-child').classList.remove('voted-down');
+      btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg> Helpful`;
+    }
+
+    function thumbsDown(id, btn) {
+      btn.classList.add('voted-down');
+      btn.closest('.message-actions').querySelector('.thumb-btn:first-of-type').classList.remove('voted-up');
+      btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg> Noted`;
+    }
+
     function resetConversation() {
-      fetch('/reset', { method: 'POST' })
-        .then(() => {
-          const chatWindow = document.getElementById('chat-window');
-          chatWindow.innerHTML = '';
-          appendMessage("Conversation cleared! Feel free to ask me anything about Medicaid, ACA, or CHIP coverage.", 'assistant');
-        });
+      fetch('/reset', { method: 'POST' }).then(() => {
+        const chatWindow = document.getElementById('chat-window');
+        chatWindow.innerHTML = `
+          <div class="welcome-card">
+            <div class="welcome-header">
+              <h2 class="welcome-title">How can I help you today?</h2>
+              <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs.</p>
+            </div>
+            <div class="welcome-chips">
+              <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income & Medicaid qualification</button>
+              <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage options</button>
+              <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 community rules</button>
+              <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidy calculator</button>
+            </div>
+          </div>`;
+        messageCount = 0;
+      });
     }
   </script>
-
 </body>
 </html>
