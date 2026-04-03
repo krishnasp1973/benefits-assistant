@@ -1,0 +1,190 @@
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f0f4f8;
+  color: #1a202c;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* ── App container ── */
+.app-container {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+  height: calc(100vh - 48px);
+}
+
+/* ── Header ── */
+.app-header {
+  background: #1a56db;
+  color: white;
+  padding: 20px 24px;
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header-icon {
+  font-size: 28px;
+  background: rgba(255,255,255,0.2);
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.app-header h1 { font-size: 18px; font-weight: 600; }
+.header-subtitle { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+
+/* ── Disclaimer ── */
+.disclaimer {
+  background: #fffbeb;
+  border-bottom: 1px solid #fde68a;
+  padding: 10px 20px;
+  font-size: 12px;
+  color: #92400e;
+}
+.disclaimer a { color: #1a56db; text-decoration: none; }
+.disclaimer a:hover { text-decoration: underline; }
+
+/* ── Quick question chips ── */
+.quick-questions {
+  padding: 12px 20px 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.quick-label { font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  background: #ebf4ff;
+  color: #1a56db;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.chip:hover { background: #1a56db; color: white; border-color: #1a56db; }
+
+/* ── Chat window ── */
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* ── Messages ── */
+.message { display: flex; }
+.user-message { justify-content: flex-end; }
+.assistant-message { justify-content: flex-start; }
+
+.message-bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.user-message .message-bubble {
+  background: #1a56db;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+.assistant-message .message-bubble {
+  background: #f7fafc;
+  color: #1a202c;
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 4px;
+}
+.message-bubble ul { margin: 8px 0 0 16px; }
+.message-bubble li { margin-top: 4px; }
+.message-bubble p + p { margin-top: 8px; }
+
+/* ── Loading animation ── */
+.loading {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 14px 18px;
+}
+.loading span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #718096;
+  animation: bounce 1.2s infinite;
+}
+.loading span:nth-child(2) { animation-delay: 0.2s; }
+.loading span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Input area ── */
+.input-area {
+  display: flex;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid #e2e8f0;
+  background: white;
+}
+#user-input {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+  line-height: 1.5;
+}
+#user-input:focus { border-color: #1a56db; }
+
+#send-btn {
+  background: #1a56db;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+  align-self: flex-end;
+}
+#send-btn:hover { background: #1e429f; }
+#send-btn:disabled { background: #a0aec0; cursor: not-allowed; }
+
+/* ── Reset button ── */
+.reset-area {
+  padding: 8px 20px 16px;
+  text-align: center;
+}
+.reset-btn {
+  background: none;
+  border: none;
+  color: #718096;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 8px;
+}
+.reset-btn:hover { color: #1a202c; }

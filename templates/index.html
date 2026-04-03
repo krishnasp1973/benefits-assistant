@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benefits Eligibility Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="app-container">
+   
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-icon">⚕</div>
+        <div>
+          <h1>Benefits Eligibility Assistant</h1>
+          <p class="header-subtitle">Ask questions about Medicaid, ACA Marketplace, and CHIP coverage</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Disclaimer banner -->
+    <div class="disclaimer">
+      ℹ️ This tool provides general information only. Always verify eligibility with your state agency or <a href="https://healthcare.gov" target="_blank">healthcare.gov</a>.
+    </div>
+
+    <!-- Quick-start question chips -->
+    <div class="quick-questions">
+      <p class="quick-label">Try asking:</p>
+      <div class="chips">
+        <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year?')">Income &amp; Medicaid</button>
+        <button class="chip" onclick="askQuestion('What is the difference between Medicaid and ACA?')">Medicaid vs ACA</button>
+        <button class="chip" onclick="askQuestion('Can my 10-year-old get CHIP coverage?')">CHIP for kids</button>
+        <button class="chip" onclick="askQuestion('I lost my job. What are my health insurance options?')">Lost job coverage</button>
+        <button class="chip" onclick="askQuestion('When is open enrollment for ACA?')">Open enrollment</button>
+      </div>
+    </div>
+
+    <!-- Chat window -->
+    <div class="chat-window" id="chat-window">
+      <!-- Welcome message -->
+      <div class="message assistant-message">
+        <div class="message-bubble">
+          <p>Hello! I'm your Benefits Eligibility Assistant. I can help you understand your options for <strong>Medicaid</strong>, <strong>ACA Marketplace</strong> plans, and <strong>CHIP</strong>.</p>
+          <p>You can ask me things like:</p>
+          <ul>
+            <li>What are the income limits for Medicaid?</li>
+            <li>Do I qualify for health insurance subsidies?</li>
+            <li>What does CHIP cover for my child?</li>
+          </ul>
+          <p>What would you like to know?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input area -->
+    <div class="input-area">
+      <textarea
+        id="user-input"
+        placeholder="Ask about Medicaid, ACA plans, CHIP eligibility..."
+        rows="1"
+        onkeydown="handleKeydown(event)"
+      ></textarea>
+      <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Reset button -->
+    <div class="reset-area">
+      <button class="reset-btn" onclick="resetConversation()">↺ Start new conversation</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Auto-resize textarea as user types
+    const textarea = document.getElementById('user-input');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+
+    // Send on Enter (but allow Shift+Enter for new lines)
+    function handleKeydown(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    // Pre-fill a question from the quick chips
+    function askQuestion(question) {
+      textarea.value = question;
+      sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const question = input.value.trim();
+     
+      if (!question) return;
+     
+      // Add user's message to chat
+      appendMessage(question, 'user');
+     
+      // Clear input
+      input.value = '';
+      input.style.height = 'auto';
+     
+      // Show loading indicator
+      const loadingId = appendLoading();
+     
+      // Disable send button while waiting
+      document.getElementById('send-btn').disabled = true;
+     
+      // Send question to our Flask backend
+      fetch('/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: question })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Remove loading indicator
+        removeLoading(loadingId);
+       
+        // Show the AI's answer
+        if (data.answer) {
+          appendMessage(data.answer, 'assistant');
+        } else {
+          appendMessage('Sorry, something went wrong. Please try again.', 'assistant');
+        }
+      })
+      .catch(error => {
+        removeLoading(loadingId);
+        appendMessage('Connection error. Please check your internet and try again.', 'assistant');
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        document.getElementById('send-btn').disabled = false;
+      });
+    }
+
+    function appendMessage(text, role) {
+      const chatWindow = document.getElementById('chat-window');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${role}-message`;
+     
+      const bubble = document.createElement('div');
+      bubble.className = 'message-bubble';
+     
+      // Simple markdown-like formatting: convert **bold** and line breaks
+      const formatted = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
+     
+      bubble.innerHTML = formatted;
+      messageDiv.appendChild(bubble);
+      chatWindow.appendChild(messageDiv);
+     
+      // Scroll to the new message
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+     
+      return messageDiv;
+    }
+
+    function appendLoading() {
+      const chatWindow = document.getElementById('chat-window');
+      const id = 'loading-' + Date.now();
+      const div = document.createElement('div');
+      div.id = id;
+      div.className = 'message assistant-message';
+      div.innerHTML = '<div class="message-bubble loading"><span></span><span></span><span></span></div>';
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      return id;
+    }
+
+    function removeLoading(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    function resetConversation() {
+      fetch('/reset', { method: 'POST' })
+        .then(() => {
+          const chatWindow = document.getElementById('chat-window');
+          chatWindow.innerHTML = '';
+          appendMessage("Conversation cleared! Feel free to ask me anything about Medicaid, ACA, or CHIP coverage.", 'assistant');
+        });
+    }
+  </script>
+
+</body>
+</html>
