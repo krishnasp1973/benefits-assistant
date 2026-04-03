@@ -188,3 +188,34 @@ body {
   padding: 4px 8px;
 }
 .reset-btn:hover { color: #1a202c; }
+
+/* ── Sources ── */
+.sources {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.sources-label {
+  font-size: 11px;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.source-link {
+  display: inline-block;
+  background: #ebf4ff;
+  color: #1a56db;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 11px;
+  text-decoration: none;
+}
+.source-link:hover {
+  background: #1a56db;
+  color: white;
+}

@@ -127,7 +127,7 @@
        
         // Show the AI's answer
         if (data.answer) {
-          appendMessage(data.answer, 'assistant');
+          appendMessage(data.answer, 'assistant', data.sources);
         } else {
           appendMessage('Sorry, something went wrong. Please try again.', 'assistant');
         }
@@ -142,7 +142,7 @@
       });
     }
 
-    function appendMessage(text, role) {
+    function appendMessage(text, role, sources = []) {
       const chatWindow = document.getElementById('chat-window');
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${role}-message`;
@@ -150,18 +150,24 @@
       const bubble = document.createElement('div');
       bubble.className = 'message-bubble';
      
-      // Simple markdown-like formatting: convert **bold** and line breaks
       const formatted = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br>');
      
       bubble.innerHTML = formatted;
+
+      // Add sources if provided
+      if (sources && sources.length > 0) {
+        const sourcesDiv = document.createElement('div');
+        sourcesDiv.className = 'sources';
+        sourcesDiv.innerHTML = '<span class="sources-label">Sources:</span>' +
+          sources.map(s => `<a href="${s.url}" target="_blank" class="source-link">${s.label}</a>`).join('');
+        bubble.appendChild(sourcesDiv);
+      }
+
       messageDiv.appendChild(bubble);
       chatWindow.appendChild(messageDiv);
-     
-      // Scroll to the new message
       chatWindow.scrollTop = chatWindow.scrollHeight;
-     
       return messageDiv;
     }
 
