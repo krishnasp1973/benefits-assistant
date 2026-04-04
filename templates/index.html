@@ -9,14 +9,10 @@
 </head>
 <body>
   <div class="layout">
-
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-brand">
         <div class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <span class="brand-name">BenefitsAI</span>
       </div>
@@ -58,7 +54,6 @@
       </div>
     </aside>
 
-    <!-- Main chat area -->
     <main class="main">
       <header class="topbar">
         <div class="topbar-left">
@@ -79,13 +74,13 @@
         <div class="welcome-card">
           <div class="welcome-header">
             <h2 class="welcome-title">How can I help you today?</h2>
-            <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs.</p>
+            <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs. After any answer, simply type a state name like <strong>California</strong> or <strong>NY</strong> to get state-specific details.</p>
           </div>
           <div class="welcome-chips">
-            <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income &amp; Medicaid qualification</button>
-            <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage options</button>
-            <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 community rules</button>
-            <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidy calculator</button>
+            <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income &amp; Medicaid</button>
+            <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage</button>
+            <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 CE rules</button>
+            <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidies</button>
           </div>
         </div>
       </div>
@@ -94,45 +89,24 @@
         <div class="input-wrapper">
           <textarea
             id="user-input"
-            placeholder="Ask about eligibility, income limits, enrollment, state programs..."
+            placeholder="Ask a question, or type a state name like 'California' or 'NY' for state-specific details..."
             rows="1"
             onkeydown="handleKeydown(event)"
           ></textarea>
-          <button id="send-btn" onclick="sendMessage()" title="Send message">
+          <button id="send-btn" onclick="sendMessage()" title="Send">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
             </svg>
           </button>
         </div>
-        <p class="input-hint">Press Enter to send · Shift+Enter for new line · Try typing "CE" for community engagement</p>
+        <p class="input-hint">Press Enter to send · Shift+Enter for new line · Type a state name anytime for state-specific info</p>
       </div>
     </main>
   </div>
 
   <script>
-    const ALL_STATES = [
-      {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
-      {code:"AR",name:"Arkansas"},{code:"CA",name:"California"},{code:"CO",name:"Colorado"},
-      {code:"CT",name:"Connecticut"},{code:"DE",name:"Delaware"},{code:"FL",name:"Florida"},
-      {code:"GA",name:"Georgia"},{code:"HI",name:"Hawaii"},{code:"ID",name:"Idaho"},
-      {code:"IL",name:"Illinois"},{code:"IN",name:"Indiana"},{code:"IA",name:"Iowa"},
-      {code:"KS",name:"Kansas"},{code:"KY",name:"Kentucky"},{code:"LA",name:"Louisiana"},
-      {code:"ME",name:"Maine"},{code:"MD",name:"Maryland"},{code:"MA",name:"Massachusetts"},
-      {code:"MI",name:"Michigan"},{code:"MN",name:"Minnesota"},{code:"MS",name:"Mississippi"},
-      {code:"MO",name:"Missouri"},{code:"MT",name:"Montana"},{code:"NE",name:"Nebraska"},
-      {code:"NV",name:"Nevada"},{code:"NH",name:"New Hampshire"},{code:"NJ",name:"New Jersey"},
-      {code:"NM",name:"New Mexico"},{code:"NY",name:"New York"},{code:"NC",name:"North Carolina"},
-      {code:"ND",name:"North Dakota"},{code:"OH",name:"Ohio"},{code:"OK",name:"Oklahoma"},
-      {code:"OR",name:"Oregon"},{code:"PA",name:"Pennsylvania"},{code:"RI",name:"Rhode Island"},
-      {code:"SC",name:"South Carolina"},{code:"SD",name:"South Dakota"},{code:"TN",name:"Tennessee"},
-      {code:"TX",name:"Texas"},{code:"UT",name:"Utah"},{code:"VT",name:"Vermont"},
-      {code:"VA",name:"Virginia"},{code:"WA",name:"Washington"},{code:"WV",name:"West Virginia"},
-      {code:"WI",name:"Wisconsin"},{code:"WY",name:"Wyoming"},{code:"DC",name:"Washington DC"}
-    ];
-
     const textarea = document.getElementById('user-input');
     let messageCount = 0;
-    let session_last_topic = '';
 
     textarea.addEventListener('input', function() {
       this.style.height = 'auto';
@@ -151,31 +125,25 @@
       sendMessage();
     }
 
-    function sendMessage(stateCode = null) {
+    function sendMessage() {
       const input = document.getElementById('user-input');
       const question = input.value.trim();
-
-      if (!stateCode && !question) return;
+      if (!question) return;
 
       const welcome = document.querySelector('.welcome-card');
       if (welcome) welcome.remove();
 
-      if (!stateCode) {
-        appendMessage(question, 'user');
-        input.value = '';
-        input.style.height = 'auto';
-      }
+      appendMessage(question, 'user');
+      input.value = '';
+      input.style.height = 'auto';
 
       const loadingId = appendLoading();
       document.getElementById('send-btn').disabled = true;
 
-      const endpoint = stateCode ? '/ask-state' : '/ask';
-      const body = stateCode ? { state_code: stateCode } : { question: question };
-
-      fetch(endpoint, {
+      fetch('/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify({ question })
       })
       .then(r => r.json())
       .then(data => {
@@ -186,15 +154,15 @@
           return;
         }
 
-        // Clarification needed (typo or abbreviation detected)
+        // Abbreviation clarification
         if (data.clarification) {
           appendClarification(data.clarification);
           return;
         }
 
         if (data.answer) {
-          const stateLabel = stateCode && data.state_name ? data.state_name : null;
-          appendMessage(data.answer, 'assistant', data.sources, data.show_state_picker, stateLabel);
+          const stateTag = data.state_name || null;
+          appendMessage(data.answer, 'assistant', data.sources, stateTag);
         } else {
           appendMessage('Something went wrong. Please try again.', 'assistant');
         }
@@ -208,12 +176,11 @@
       });
     }
 
-    function appendMessage(text, role, sources = [], showStatePicker = false, stateLabel = null) {
+    function appendMessage(text, role, sources = [], stateTag = null) {
       const chatWindow = document.getElementById('chat-window');
       const id = 'msg-' + (++messageCount);
 
       if (role === 'user') {
-        session_last_topic = text;
         const div = document.createElement('div');
         div.className = 'message user-message';
         div.innerHTML = `<div class="message-bubble">${escapeHtml(text)}</div>`;
@@ -236,40 +203,12 @@
             </div>`;
         }
 
-        // State dropdown picker
-        let statePickerHtml = '';
-        if (showStatePicker) {
-          statePickerHtml = `
-            <div class="state-picker">
-              <p class="state-picker-label">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Want details for a specific state?
-              </p>
-              <div class="state-dropdown-wrapper">
-                <input
-                  type="text"
-                  class="state-search-input"
-                  placeholder="Type state name or 2-letter code (e.g. CA, New York)..."
-                  oninput="filterStates(this)"
-                  onfocus="openDropdown(this)"
-                />
-                <div class="state-dropdown" style="display:none;">
-                  ${ALL_STATES.map(s =>
-                    `<div class="state-option" onclick="selectState('${s.code}', '${s.name}', this)">
-                      <span class="state-code">${s.code}</span>
-                      <span class="state-name-text">${s.name}</span>
-                    </div>`
-                  ).join('')}
-                </div>
-              </div>
-            </div>`;
-        }
-
-        if (stateLabel) {
-          statePickerHtml = `
+        let stateTagHtml = '';
+        if (stateTag) {
+          stateTagHtml = `
             <div class="state-label-tag">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Showing details for: <strong>${stateLabel}</strong>
+              Showing details for: <strong>${stateTag}</strong>
             </div>`;
         }
 
@@ -283,7 +222,7 @@
           <div class="message-content">
             <div class="message-bubble"><p>${formatted}</p></div>
             ${sourcesHtml}
-            ${statePickerHtml}
+            ${stateTagHtml}
             <div class="message-actions">
               <button class="action-btn" onclick="copyMessage('${id}')">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -305,75 +244,6 @@
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    // ── State dropdown functions ──
-    function openDropdown(input) {
-      const dropdown = input.nextElementSibling;
-      dropdown.style.display = 'block';
-      filterStates(input);
-
-      // Close when clicking outside
-      setTimeout(() => {
-        document.addEventListener('click', function handler(e) {
-          if (!input.closest('.state-dropdown-wrapper').contains(e.target)) {
-            dropdown.style.display = 'none';
-            document.removeEventListener('click', handler);
-          }
-        });
-      }, 100);
-    }
-
-    function filterStates(input) {
-      const query = input.value.toLowerCase().trim();
-      const dropdown = input.nextElementSibling;
-      dropdown.style.display = 'block';
-
-      const options = dropdown.querySelectorAll('.state-option');
-      let visibleCount = 0;
-      options.forEach(opt => {
-        const code = opt.querySelector('.state-code').textContent.toLowerCase();
-        const name = opt.querySelector('.state-name-text').textContent.toLowerCase();
-        const matches = !query || code.includes(query) || name.includes(query);
-        opt.style.display = matches ? 'flex' : 'none';
-        if (matches) visibleCount++;
-      });
-    }
-
-    function selectState(code, name, el) {
-      const wrapper = el.closest('.state-dropdown-wrapper');
-      const input = wrapper.querySelector('.state-search-input');
-      const dropdown = wrapper.querySelector('.state-dropdown');
-
-      // Update input to show selection
-      input.value = `${name} (${code})`;
-      input.disabled = true;
-      dropdown.style.display = 'none';
-
-      // Show the user's selection as a message
-      appendMessage(`Show me Medicaid details for ${name}`, 'user');
-
-      // Fetch state details
-      const loadingId = appendLoading();
-      fetch('/ask-state', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state_code: code })
-      })
-      .then(r => r.json())
-      .then(data => {
-        removeLoading(loadingId);
-        if (data.answer) {
-          appendMessage(data.answer, 'assistant', data.sources, false, data.state_name);
-        } else if (data.error) {
-          appendMessage(data.error, 'assistant');
-        }
-      })
-      .catch(() => {
-        removeLoading(loadingId);
-        appendMessage('Could not fetch state details. Please try again.', 'assistant');
-      });
-    }
-
-    // ── Clarification functions ──
     function appendClarification(clarification) {
       const chatWindow = document.getElementById('chat-window');
       const div = document.createElement('div');
@@ -383,9 +253,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <div class="message-content">
-          <div class="message-bubble">
-            <p>${clarification.message}</p>
-          </div>
+          <div class="message-bubble"><p>${clarification.message}</p></div>
           <div class="clarification-btns">
             <button class="clarify-yes" onclick="confirmClarification('${clarification.expanded_query}', '${clarification.label}', this)">
               Yes — show me ${clarification.label}
@@ -400,11 +268,14 @@
     }
 
     function confirmClarification(expandedQuery, label, btn) {
+      // Replace buttons with status text
       btn.closest('.clarification-btns').innerHTML =
         `<span class="clarify-confirmed">Searching for: ${label}...</span>`;
-      appendMessage(expandedQuery, 'user');
 
+      // Show the expanded query as a user message
+      appendMessage(expandedQuery, 'user');
       const loadingId = appendLoading();
+
       fetch('/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -413,15 +284,17 @@
       .then(r => r.json())
       .then(data => {
         removeLoading(loadingId);
+        // expanded query is a full sentence — should never re-trigger clarification
         if (data.answer) {
-          appendMessage(data.answer, 'assistant', data.sources, data.show_state_picker);
+          appendMessage(data.answer, 'assistant', data.sources, data.state_name || null);
+        } else {
+          appendMessage('Something went wrong. Please try again.', 'assistant');
         }
+      })
+      .catch(() => {
+        removeLoading(loadingId);
+        appendMessage('Connection error. Please try again.', 'assistant');
       });
-    }
-
-    // ── Utility functions ──
-    function escapeHtml(text) {
-      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
     function appendLoading() {
@@ -479,6 +352,10 @@
       btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg> Noted`;
     }
 
+    function escapeHtml(text) {
+      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
     function resetConversation() {
       fetch('/reset', { method: 'POST' }).then(() => {
         const chatWindow = document.getElementById('chat-window');
@@ -486,17 +363,16 @@
           <div class="welcome-card">
             <div class="welcome-header">
               <h2 class="welcome-title">How can I help you today?</h2>
-              <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs.</p>
+              <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs. After any answer, simply type a state name like <strong>California</strong> or <strong>NY</strong> to get state-specific details.</p>
             </div>
             <div class="welcome-chips">
-              <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income &amp; Medicaid qualification</button>
-              <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage options</button>
-              <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 community rules</button>
-              <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidy calculator</button>
+              <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income &amp; Medicaid</button>
+              <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage</button>
+              <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 CE rules</button>
+              <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidies</button>
             </div>
           </div>`;
         messageCount = 0;
-        session_last_topic = '';
       });
     }
   </script>
