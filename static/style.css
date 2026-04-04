@@ -478,3 +478,189 @@ body {
 .chat-window::-webkit-scrollbar { width: 4px; }
 .chat-window::-webkit-scrollbar-track { background: transparent; }
 .chat-window::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── Clarification UI ── */
+.clarification-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.clarify-yes {
+  padding: 8px 16px;
+  background: var(--brand);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.clarify-yes:hover { background: var(--brand-dark); }
+
+.clarify-no {
+  padding: 8px 16px;
+  background: white;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.clarify-no:hover { border-color: var(--brand); color: var(--brand); }
+
+.clarify-confirmed {
+  font-size: 12px;
+  color: var(--brand);
+  font-style: italic;
+}
+
+/* ── State dropdown ── */
+.state-picker {
+  margin-top: 12px;
+  padding: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.state-picker-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.state-dropdown-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+}
+
+.state-search-input {
+  width: 100%;
+  padding: 9px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: white;
+  outline: none;
+  transition: border-color 0.15s;
+  cursor: text;
+}
+.state-search-input:focus { border-color: var(--brand); }
+.state-search-input:disabled {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  border-color: #b2ddd6;
+  cursor: default;
+}
+
+.state-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.state-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-size: 13px;
+}
+.state-option:hover { background: var(--brand-light); }
+
+.state-code {
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--brand-dark);
+  background: var(--brand-light);
+  border: 1px solid #b2ddd6;
+  border-radius: 4px;
+  padding: 1px 6px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.state-name-text {
+  color: var(--text-primary);
+}
+
+.state-dropdown::-webkit-scrollbar { width: 4px; }
+.state-dropdown::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── State label tag ── */
+.state-label-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--brand-dark);
+  background: var(--brand-light);
+  border: 1px solid #b2ddd6;
+  border-radius: 6px;
+  padding: 5px 12px;
+}
+
+/* ── Clarification UI ── */
+.clarification-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.clarify-yes {
+  padding: 8px 16px;
+  background: var(--brand);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.clarify-yes:hover { background: var(--brand-dark); }
+
+.clarify-no {
+  padding: 8px 16px;
+  background: white;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.clarify-no:hover { border-color: var(--brand); color: var(--brand); }
+
+.clarify-confirmed {
+  font-size: 12px;
+  color: var(--brand);
+  font-style: italic;
+}
