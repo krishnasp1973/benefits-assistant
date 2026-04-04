@@ -2,3 +2,5 @@ openai
 flask
 python-dotenv
 gunicorn
+requests
+beautifulsoup4
