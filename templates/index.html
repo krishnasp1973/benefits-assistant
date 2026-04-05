@@ -27,7 +27,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           Medicaid vs ACA
         </button>
-        <button class="nav-item" onclick="askQuestion('Can my child get CHIP coverage and what does it cover?')">
+        <button class="nav-item" onclick="askQuestion('Can my child get CHIP coverage?')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           CHIP for children
         </button>
@@ -35,17 +35,52 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
           Lost job coverage
         </button>
-        <button class="nav-item" onclick="askQuestion('When is ACA open enrollment and how do I apply?')">
+        <button class="nav-item" onclick="askQuestion('When is ACA open enrollment?')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Open enrollment
         </button>
-        <button class="nav-item" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">
+        <button class="nav-item" onclick="askQuestion('What does Medicare cover and who qualifies?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Medicare
+        </button>
+        <button class="nav-item" onclick="askQuestion('I am a veteran. What VA health benefits do I qualify for?')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          NY 2027 requirements
+          VA / Veterans
+        </button>
+        <button class="nav-item" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          NY 2027 CE rules
+        </button>
+
+        <p class="nav-label" style="margin-top:14px">Life events</p>
+        <button class="nav-item life-event" onclick="triggerLifeEvent('I just had a baby. What do I need to do about health insurance coverage for my newborn?')">
+          🍼 Just had a baby
+        </button>
+        <button class="nav-item life-event" onclick="triggerLifeEvent('I just lost my job and need health insurance. What are my options and deadlines?')">
+          💼 Lost my job
+        </button>
+        <button class="nav-item life-event" onclick="triggerLifeEvent('I am turning 65 soon. What do I need to know about Medicare enrollment?')">
+          🎂 Turning 65
+        </button>
+        <button class="nav-item life-event" onclick="triggerLifeEvent('I just got married. How do I update my health insurance?')">
+          💍 Just got married
+        </button>
+        <button class="nav-item life-event" onclick="triggerLifeEvent('I am pregnant and currently uninsured. What health coverage options do I have?')">
+          🤰 Pregnant
+        </button>
+        <button class="nav-item life-event" onclick="triggerLifeEvent('My child is turning 26 and aging off my insurance plan. What are their options?')">
+          🎓 Child turning 26
         </button>
       </nav>
 
       <div class="sidebar-footer">
+        <div id="memory-indicator" class="memory-indicator" style="display:none">
+          <p class="memory-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            I remember
+          </p>
+          <div id="memory-items" class="memory-items"></div>
+        </div>
         <button class="reset-btn" onclick="resetConversation()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
           New conversation
@@ -66,21 +101,54 @@
         <div class="topbar-right">
           <span class="coverage-tag">Medicaid</span>
           <span class="coverage-tag">ACA</span>
+          <span class="coverage-tag">Medicare</span>
           <span class="coverage-tag">CHIP</span>
+          <span class="coverage-tag">VA</span>
         </div>
       </header>
 
       <div class="chat-window" id="chat-window">
+        <!-- Welcome card -->
         <div class="welcome-card">
           <div class="welcome-header">
             <h2 class="welcome-title">How can I help you today?</h2>
-            <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs. After any answer, simply type a state name like <strong>California</strong> or <strong>NY</strong> to get state-specific details.</p>
+            <p class="welcome-subtitle">Ask me anything about U.S. health coverage — Medicaid, ACA, Medicare, CHIP, VA benefits, and all 50 states. I remember your situation as we chat.</p>
           </div>
           <div class="welcome-chips">
-            <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income &amp; Medicaid</button>
+            <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Check Medicaid eligibility</button>
             <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage</button>
             <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 CE rules</button>
             <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidies</button>
+          </div>
+
+          <!-- Income calculator widget -->
+          <div class="calculator-widget">
+            <p class="calc-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="11" y2="14"/></svg>
+              Quick eligibility check
+            </p>
+            <div class="calc-inputs">
+              <div class="calc-field">
+                <label>Annual household income</label>
+                <input type="text" id="calc-income" placeholder="e.g. $45,000" oninput="formatIncome(this)"/>
+              </div>
+              <div class="calc-field">
+                <label>Household size</label>
+                <select id="calc-size">
+                  <option value="">Select...</option>
+                  <option value="1">1 person</option>
+                  <option value="2">2 people</option>
+                  <option value="3">3 people</option>
+                  <option value="4">4 people</option>
+                  <option value="5">5 people</option>
+                  <option value="6">6 people</option>
+                  <option value="7">7 people</option>
+                  <option value="8">8+ people</option>
+                </select>
+              </div>
+              <button class="calc-btn" onclick="runCalculator()">Check eligibility</button>
+            </div>
+            <div id="calc-result" class="calc-result" style="display:none"></div>
           </div>
         </div>
       </div>
@@ -89,7 +157,7 @@
         <div class="input-wrapper">
           <textarea
             id="user-input"
-            placeholder="Ask a question, or type a state name like 'California' or 'NY' for state-specific details..."
+            placeholder="Ask about coverage, eligibility, costs, enrollment... or type a state name for state-specific details"
             rows="1"
             onkeydown="handleKeydown(event)"
           ></textarea>
@@ -99,7 +167,7 @@
             </svg>
           </button>
         </div>
-        <p class="input-hint">Press Enter to send · Shift+Enter for new line · Type a state name anytime for state-specific info</p>
+        <p class="input-hint">Enter to send · Shift+Enter for new line · Type state name for state-specific info</p>
       </div>
     </main>
   </div>
@@ -113,30 +181,32 @@
       this.style.height = Math.min(this.scrollHeight, 140) + 'px';
     });
 
-    function handleKeydown(event) {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-      }
+    function handleKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     }
 
-    function askQuestion(question) {
-      textarea.value = question;
-      sendMessage();
+    function askQuestion(q) { textarea.value = q; sendMessage(); }
+
+    function triggerLifeEvent(q) {
+      const welcome = document.querySelector('.welcome-card');
+      if (welcome) welcome.remove();
+      appendMessage(q, 'user');
+      textarea.value = '';
+      callAsk(q);
     }
 
     function sendMessage() {
-      const input = document.getElementById('user-input');
-      const question = input.value.trim();
-      if (!question) return;
-
+      const q = textarea.value.trim();
+      if (!q) return;
       const welcome = document.querySelector('.welcome-card');
       if (welcome) welcome.remove();
+      appendMessage(q, 'user');
+      textarea.value = '';
+      textarea.style.height = 'auto';
+      callAsk(q);
+    }
 
-      appendMessage(question, 'user');
-      input.value = '';
-      input.style.height = 'auto';
-
+    function callAsk(question) {
       const loadingId = appendLoading();
       document.getElementById('send-btn').disabled = true;
 
@@ -148,34 +218,129 @@
       .then(r => r.json())
       .then(data => {
         removeLoading(loadingId);
-
-        if (data.error) {
-          appendMessage(data.error, 'assistant');
-          return;
-        }
-
-        // Abbreviation clarification
-        if (data.clarification) {
-          appendClarification(data.clarification);
-          return;
-        }
-
+        if (data.error) { appendMessage(data.error, 'assistant'); return; }
+        if (data.clarification) { appendClarification(data.clarification); return; }
         if (data.answer) {
-          const stateTag = data.state_name || null;
-          appendMessage(data.answer, 'assistant', data.sources, stateTag);
-        } else {
-          appendMessage('Something went wrong. Please try again.', 'assistant');
+          appendMessage(data.answer, 'assistant', data.sources, data.state_name);
+          if (data.calculator_result) showCalculatorResult(data.calculator_result, true);
+          if (data.user_profile) updateMemoryIndicator(data.user_profile);
         }
+      })
+      .catch(() => { removeLoading(loadingId); appendMessage('Connection error. Please try again.', 'assistant'); })
+      .finally(() => { document.getElementById('send-btn').disabled = false; });
+    }
+
+    // ── Income Calculator ──
+    function formatIncome(input) {
+      let val = input.value.replace(/[^0-9]/g, '');
+      if (val) input.value = '$' + parseInt(val).toLocaleString();
+    }
+
+    function runCalculator() {
+      const incomeRaw = document.getElementById('calc-income').value.replace(/[^0-9]/g, '');
+      const size = document.getElementById('calc-size').value;
+      if (!incomeRaw || !size) {
+        alert('Please enter both income and household size');
+        return;
+      }
+
+      const btn = document.querySelector('.calc-btn');
+      btn.textContent = 'Checking...';
+      btn.disabled = true;
+
+      fetch('/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ income: parseInt(incomeRaw), household_size: parseInt(size) })
+      })
+      .then(r => r.json())
+      .then(data => {
+        btn.textContent = 'Check eligibility';
+        btn.disabled = false;
+        if (data.error) { alert(data.error); return; }
+        showCalculatorResult(data, false);
+        // Remove welcome card and show in chat
+        const welcome = document.querySelector('.welcome-card');
+        if (welcome) welcome.remove();
+        const summary = `Based on my income of $${parseInt(incomeRaw).toLocaleString()} with a household of ${size}, what programs do I qualify for and what should I do next?`;
+        appendMessage(summary, 'user');
+        callAsk(summary);
       })
       .catch(() => {
-        removeLoading(loadingId);
-        appendMessage('Connection error. Please try again.', 'assistant');
-      })
-      .finally(() => {
-        document.getElementById('send-btn').disabled = false;
+        btn.textContent = 'Check eligibility';
+        btn.disabled = false;
       });
     }
 
+    function showCalculatorResult(data, inline) {
+      const container = inline
+        ? document.getElementById('chat-window')
+        : document.getElementById('calc-result');
+
+      const fpl = data.fpl_percent;
+      let color = fpl <= 138 ? '#0f6e56' : fpl <= 400 ? '#854f0b' : '#444';
+      let bgColor = fpl <= 138 ? '#e1f5ee' : fpl <= 400 ? '#faeeda' : '#f1efe8';
+
+      let programsHtml = data.programs.map(p => `
+        <div class="calc-program">
+          <div class="calc-program-header">
+            <span class="calc-program-name">${p.name}</span>
+            <span class="calc-program-status ${p.status}">${p.status === 'likely_qualify' ? 'Likely eligible' : 'Eligible (no subsidy)'}</span>
+          </div>
+          <p class="calc-program-note">${p.note}</p>
+          <p class="calc-program-action">${p.action}</p>
+        </div>`).join('');
+
+      if (inline) {
+        const div = document.createElement('div');
+        div.className = 'message assistant-message';
+        div.innerHTML = `
+          <div class="assistant-avatar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/></svg>
+          </div>
+          <div class="message-content">
+            <div class="calc-result-card">
+              <div class="fpl-bar">
+                <span class="fpl-label">Your income is</span>
+                <span class="fpl-value" style="color:${color};background:${bgColor}">${fpl}% of Federal Poverty Level</span>
+              </div>
+              ${programsHtml}
+            </div>
+          </div>`;
+        document.getElementById('chat-window').appendChild(div);
+        document.getElementById('chat-window').scrollTop = 99999;
+      } else {
+        container.style.display = 'block';
+        container.innerHTML = `
+          <div class="fpl-bar">
+            <span class="fpl-label">Your income is</span>
+            <span class="fpl-value" style="color:${color};background:${bgColor}">${fpl}% FPL</span>
+          </div>
+          ${programsHtml}`;
+      }
+    }
+
+    // ── Memory indicator ──
+    function updateMemoryIndicator(profile) {
+      const indicator = document.getElementById('memory-indicator');
+      const items = document.getElementById('memory-items');
+      const tags = [];
+
+      if (profile.income) tags.push(`$${profile.income.toLocaleString()}/yr`);
+      if (profile.household_size) tags.push(`${profile.household_size} people`);
+      if (profile.state) tags.push(profile.state);
+      if (profile.age) tags.push(`Age ${profile.age}`);
+      if (profile.life_events && profile.life_events.length > 0) {
+        profile.life_events.forEach(e => tags.push(e));
+      }
+
+      if (tags.length > 0) {
+        indicator.style.display = 'block';
+        items.innerHTML = tags.map(t => `<span class="memory-tag">${t}</span>`).join('');
+      }
+    }
+
+    // ── Message rendering ──
     function appendMessage(text, role, sources = [], stateTag = null) {
       const chatWindow = document.getElementById('chat-window');
       const id = 'msg-' + (++messageCount);
@@ -193,24 +358,20 @@
 
         let sourcesHtml = '';
         if (sources && sources.length > 0) {
-          sourcesHtml = `
-            <div class="sources-bar">
-              <span class="sources-label">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                Sources
-              </span>
-              ${sources.map(s => `<a href="${s.url}" target="_blank" class="source-pill">${s.label}</a>`).join('')}
-            </div>`;
+          sourcesHtml = `<div class="sources-bar">
+            <span class="sources-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              Sources
+            </span>
+            ${sources.map(s => `<a href="${s.url}" target="_blank" class="source-pill">${s.label}</a>`).join('')}
+          </div>`;
         }
 
-        let stateTagHtml = '';
-        if (stateTag) {
-          stateTagHtml = `
-            <div class="state-label-tag">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Showing details for: <strong>${stateTag}</strong>
-            </div>`;
-        }
+        let stateTagHtml = stateTag ? `
+          <div class="state-label-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Showing details for: <strong>${stateTag}</strong>
+          </div>` : '';
 
         const div = document.createElement('div');
         div.className = 'message assistant-message';
@@ -240,7 +401,6 @@
           </div>`;
         chatWindow.appendChild(div);
       }
-
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
@@ -268,33 +428,10 @@
     }
 
     function confirmClarification(expandedQuery, label, btn) {
-      // Replace buttons with status text
       btn.closest('.clarification-btns').innerHTML =
         `<span class="clarify-confirmed">Searching for: ${label}...</span>`;
-
-      // Show the expanded query as a user message
       appendMessage(expandedQuery, 'user');
-      const loadingId = appendLoading();
-
-      fetch('/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: expandedQuery })
-      })
-      .then(r => r.json())
-      .then(data => {
-        removeLoading(loadingId);
-        // expanded query is a full sentence — should never re-trigger clarification
-        if (data.answer) {
-          appendMessage(data.answer, 'assistant', data.sources, data.state_name || null);
-        } else {
-          appendMessage('Something went wrong. Please try again.', 'assistant');
-        }
-      })
-      .catch(() => {
-        removeLoading(loadingId);
-        appendMessage('Connection error. Please try again.', 'assistant');
-      });
+      callAsk(expandedQuery);
     }
 
     function appendLoading() {
@@ -358,21 +495,7 @@
 
     function resetConversation() {
       fetch('/reset', { method: 'POST' }).then(() => {
-        const chatWindow = document.getElementById('chat-window');
-        chatWindow.innerHTML = `
-          <div class="welcome-card">
-            <div class="welcome-header">
-              <h2 class="welcome-title">How can I help you today?</h2>
-              <p class="welcome-subtitle">Ask me anything about health insurance eligibility, income limits, enrollment deadlines, or state-specific programs. After any answer, simply type a state name like <strong>California</strong> or <strong>NY</strong> to get state-specific details.</p>
-            </div>
-            <div class="welcome-chips">
-              <button class="chip" onclick="askQuestion('Do I qualify for Medicaid if I make $25,000 a year and live alone?')">Income &amp; Medicaid</button>
-              <button class="chip" onclick="askQuestion('I am pregnant and uninsured. What coverage options do I have?')">Pregnancy coverage</button>
-              <button class="chip" onclick="askQuestion('What are the community engagement requirements coming in 2027 for New York Medicaid?')">NY 2027 CE rules</button>
-              <button class="chip" onclick="askQuestion('What subsidies are available on the ACA Marketplace for a family of 4 earning $60,000?')">ACA subsidies</button>
-            </div>
-          </div>`;
-        messageCount = 0;
+        location.reload();
       });
     }
   </script>

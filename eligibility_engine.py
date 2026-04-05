@@ -204,7 +204,8 @@ def identify_relevant_urls(question, knowledge_base):
 
     return urls[:2]
 
-def build_system_prompt(knowledge_base, page_contents, state_code=None, last_topic=None):
+def build_system_prompt(knowledge_base, page_contents, state_code=None,
+                        last_topic=None, user_profile=None):
     kb_text = json.dumps(knowledge_base, indent=2)
 
     pages_section = ""
@@ -213,92 +214,333 @@ def build_system_prompt(knowledge_base, page_contents, state_code=None, last_top
         for url, content in page_contents.items():
             pages_section += f"\n--- FROM: {url} ---\n{content}\n"
 
+    # Build profile context so AI remembers what it knows about the user
+    profile_section = ""
+    if user_profile and any(user_profile.values()):
+        profile_section = "\n\nWHAT I KNOW ABOUT THIS USER (remembered from conversation):\n"
+        if user_profile.get("state"):
+            profile_section += f"- State: {user_profile['state']}\n"
+        if user_profile.get("income"):
+            profile_section += f"- Annual income: ${user_profile['income']:,}\n"
+        if user_profile.get("household_size"):
+            profile_section += f"- Household size: {user_profile['household_size']}\n"
+        if user_profile.get("age"):
+            profile_section += f"- Age: {user_profile['age']}\n"
+        if user_profile.get("life_events"):
+            profile_section += f"- Life events mentioned: {', '.join(user_profile['life_events'])}\n"
+        if user_profile.get("has_insurance") is not None:
+            status = "has insurance" if user_profile["has_insurance"] else "uninsured"
+            profile_section += f"- Insurance status: {status}\n"
+
     state_instruction = ""
     if state_code and state_code in STATE_URLS:
         state_name = STATE_URLS[state_code]["name"]
         topic_ctx = f" about: {last_topic}" if last_topic else ""
         state_instruction = f"""
 The user is asking about {state_name}{topic_ctx}.
-Use the LIVE PAGE CONTENT to give {state_name}-specific details.
-If the live page does not contain specific information about this topic,
-say: "I was not able to find specific details about that topic for {state_name}.
+Use LIVE PAGE CONTENT for {state_name}-specific details.
+If unavailable say: "I could not find specific details for {state_name} on that topic.
 Here is what I know generally, and you can find more at {STATE_URLS[state_code]['url']}"
-Then provide the best general answer you can. NEVER give a dead-end response."""
+Then give your best general answer. NEVER give a dead-end response."""
 
     return f"""You are a comprehensive U.S. Healthcare Benefits Assistant.
-You help users understand ALL aspects of U.S. health coverage including:
-- Medicaid and CHIP (low-income coverage)
-- ACA Marketplace plans and subsidies
-- Medicare (65+ and disability coverage)
-- TRICARE (military coverage)
-- VA Health Care (veterans coverage)
-- COBRA continuation coverage
-- Special Enrollment Periods and life events
-- Mental health and substance use coverage
-- Dental, vision, and prescription drug coverage
-- State-specific health programs for all 50 states
-- Community engagement and work requirements
-- Federal Poverty Level calculations and eligibility
+You help users understand ALL aspects of U.S. health coverage including Medicaid, CHIP,
+ACA Marketplace, Medicare, TRICARE, VA Health Care, COBRA, Special Enrollment Periods,
+mental health, dental, vision, prescription drugs, and all state-specific programs.
 
 KNOWLEDGE BASE:
 {kb_text}
 {pages_section}
+{profile_section}
 
 CRITICAL INSTRUCTIONS:
-1. NEVER give a dead-end response. Always provide useful information even if limited.
-2. NEVER say you cannot modify your training data or add information — that is not relevant.
-3. NEVER say "I don't have information about that" without also providing your best answer.
-4. ALWAYS answer healthcare questions — you are knowledgeable about all U.S. health programs.
-5. PRIORITIZE live page content when available — quote specific rules, dates, and requirements.
-6. If state-specific info is unavailable from the live page, give the best general answer and provide the state URL.
-7. Detect the language of the question and respond in the SAME language automatically.
-8. After every general answer (no state specified), end with:
-   "For state-specific details, just type your state name or abbreviation (e.g. NY, California)."
-9. End EVERY answer with a Sources section:
-   Sources:
-   - https://example.gov/page
-10. {state_instruction}
+1. NEVER give a dead-end response. Always provide useful information.
+2. NEVER say you cannot modify training data — that is irrelevant.
+3. USE the user profile above to personalize answers — reference their income, state, family size when relevant.
+4. If you know their income and household size, tell them which programs they likely qualify for.
+5. PRIORITIZE live page content — quote specific rules, dates, income limits.
+6. Detect the user's language and respond in the SAME language automatically.
+7. After every general answer add: "For state-specific details, just type your state name or abbreviation."
+8. End EVERY answer with Sources section.
+9. {state_instruction}
 
 Remember: General educational information only, not legal or medical advice."""
 
 def get_ai_response(user_question, conversation_history, knowledge_base,
-                    state_code=None, last_topic=None):
+
+                    state_code=None, last_topic=None, user_profile=None):
+
     page_contents = {}
 
+
+
     if state_code and state_code in STATE_URLS:
+
         state_url = STATE_URLS[state_code]["url"]
+
         print(f"\nFetching: {STATE_URLS[state_code]['name']}")
+
         content = fetch_page_content(state_url)
+
         if content:
+
             page_contents[state_url] = content
+
     else:
+
         relevant_urls = identify_relevant_urls(user_question, knowledge_base)
+
         print(f"\nFetching {len(relevant_urls)} pages")
+
         for url in relevant_urls:
+
             content = fetch_page_content(url)
+
             if content:
+
                 page_contents[url] = content
 
+
+
     messages = [
+
         {"role": "system", "content": build_system_prompt(
-            knowledge_base, page_contents, state_code, last_topic
+
+            knowledge_base, page_contents, state_code, last_topic, user_profile
+
         )}
+
     ]
+
     messages.extend(conversation_history)
+
     messages.append({"role": "user", "content": user_question})
 
+
+
     response = client.chat.completions.create(
+
         model="gpt-4o-mini",
+
         messages=messages,
+
         temperature=0.3,
+
         max_tokens=1000
+
     )
 
+
+
     full_text = response.choices[0].message.content or ""
+
     sources = extract_sources(full_text, list(page_contents.keys()))
+
     clean_answer = clean_answer_text(full_text)
 
+
+
     return clean_answer, sources
+
+
+
+
+
+def extract_user_profile(question, current_profile):
+
+    """
+
+    Silently extracts user information from their message
+
+    and updates their profile. Works like a memory system.
+
+    """
+
+    import re
+
+    profile = current_profile.copy() if current_profile else {
+
+        "state": None,
+
+        "income": None,
+
+        "household_size": None,
+
+        "age": None,
+
+        "life_events": [],
+
+        "has_insurance": None
+
+    }
+
+
+
+    q = question.lower()
+
+
+
+    # Extract income — matches patterns like $25,000 or 25000 or 25k
+
+    income_patterns = [
+
+        r'\$(\d{1,3}(?:,\d{3})*)',
+
+        r'(\d{1,3}(?:,\d{3})+)',
+
+        r'(\d+)k\b',
+
+        r'make (\d+)',
+
+        r'earn (\d+)',
+
+        r'income (?:of |is )?(\d+)',
+
+        r'salary (?:of |is )?(\d+)',
+
+    ]
+
+    for pattern in income_patterns:
+
+        match = re.search(pattern, q)
+
+        if match:
+
+            num_str = match.group(1).replace(',', '')
+
+            num = int(num_str)
+
+            if 'k' in q[match.start():match.end()+1]:
+
+                num *= 1000
+
+            if 1000 < num < 1000000:
+
+                profile["income"] = num
+
+                break
+
+
+
+    # Extract household size
+
+    household_patterns = [
+
+        r'family of (\d+)',
+
+        r'household of (\d+)',
+
+        r'(\d+) people',
+
+        r'(\d+) person',
+
+        r'(\d+) in my family',
+
+        r'(\d+) members',
+
+    ]
+
+    for pattern in household_patterns:
+
+        match = re.search(pattern, q)
+
+        if match:
+
+            size = int(match.group(1))
+
+            if 1 <= size <= 20:
+
+                profile["household_size"] = size
+
+                break
+
+
+
+    # Extract age
+
+    age_match = re.search(r'\b(i am|i\'m|age) (\d{1,2})\b', q)
+
+    if age_match:
+
+        age = int(age_match.group(2))
+
+        if 0 < age < 120:
+
+            profile["age"] = age
+
+
+
+    # Detect life events
+
+    life_event_keywords = {
+
+        "had a baby": "new baby",
+
+        "just had": "new baby",
+
+        "newborn": "new baby",
+
+        "pregnant": "pregnant",
+
+        "lost my job": "job loss",
+
+        "laid off": "job loss",
+
+        "unemployed": "job loss",
+
+        "got married": "marriage",
+
+        "getting married": "marriage",
+
+        "divorced": "divorce",
+
+        "turning 65": "turning 65",
+
+        "turn 65": "turning 65",
+
+        "retired": "retirement",
+
+        "disability": "disability",
+
+        "disabled": "disability",
+
+        "veteran": "veteran",
+
+        "military": "veteran",
+
+    }
+
+    for keyword, event in life_event_keywords.items():
+
+        if keyword in q and event not in profile["life_events"]:
+
+            profile["life_events"].append(event)
+
+
+
+    # Detect insurance status
+
+    if any(w in q for w in ["uninsured", "no insurance", "no coverage", "without insurance"]):
+
+        profile["has_insurance"] = False
+
+    elif any(w in q for w in ["have insurance", "have coverage", "i'm insured"]):
+
+        profile["has_insurance"] = True
+
+
+
+    # Extract state
+
+    state = detect_state(question)
+
+    if state:
+
+        profile["state"] = STATE_URLS[state]["name"]
+
+
+
+    return profile
 
 def extract_sources(text, fetched_urls=None):
     sources = []
