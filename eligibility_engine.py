@@ -11,57 +11,57 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 STATE_URLS = {
-    "AL": {"name": "Alabama",       "url": "https://medicaid.alabama.gov/"},
-    "AK": {"name": "Alaska",        "url": "https://health.alaska.gov/dsds/Pages/medicaid/default.aspx"},
-    "AZ": {"name": "Arizona",       "url": "https://www.healthearizonaplus.gov/"},
-    "AR": {"name": "Arkansas",      "url": "https://www.medicaid.state.ar.us/"},
-    "CA": {"name": "California",    "url": "https://www.dhcs.ca.gov/services/medi-cal/Pages/default.aspx"},
-    "CO": {"name": "Colorado",      "url": "https://hcpf.colorado.gov/health-first-colorado"},
-    "CT": {"name": "Connecticut",   "url": "https://www.ct.gov/dss/cwp/view.asp?a=2353&q=305172"},
-    "DE": {"name": "Delaware",      "url": "https://medicaid.dhss.delaware.gov/"},
-    "FL": {"name": "Florida",       "url": "https://www.flmedicaidmanagedcare.com/"},
-    "GA": {"name": "Georgia",       "url": "https://medicaid.georgia.gov/"},
-    "HI": {"name": "Hawaii",        "url": "https://medquest.hawaii.gov/"},
-    "ID": {"name": "Idaho",         "url": "https://healthandwelfare.idaho.gov/services-programs/medicaid"},
-    "IL": {"name": "Illinois",      "url": "https://hfs.illinois.gov/medicaid"},
-    "IN": {"name": "Indiana",       "url": "https://www.in.gov/medicaid/"},
-    "IA": {"name": "Iowa",          "url": "https://hhs.iowa.gov/programs/programs-and-services/medicaid"},
-    "KS": {"name": "Kansas",        "url": "https://www.kancare.ks.gov/"},
-    "KY": {"name": "Kentucky",      "url": "https://chfs.ky.gov/agencies/dms/Pages/default.aspx"},
-    "LA": {"name": "Louisiana",     "url": "https://ldh.la.gov/medicaid"},
-    "ME": {"name": "Maine",         "url": "https://www.maine.gov/dhhs/ofi/programs-services/mainecare"},
-    "MD": {"name": "Maryland",      "url": "https://mmcp.health.maryland.gov/"},
-    "MA": {"name": "Massachusetts", "url": "https://www.mass.gov/masshealth"},
-    "MI": {"name": "Michigan",      "url": "https://www.michigan.gov/mdhhs/adult-child-serv/medicaid"},
-    "MN": {"name": "Minnesota",     "url": "https://mn.gov/dhs/people-we-serve/adults/health-care/health-care-programs/programs-and-services/medical-assistance.jsp"},
-    "MS": {"name": "Mississippi",   "url": "https://medicaid.ms.gov/"},
-    "MO": {"name": "Missouri",      "url": "https://dss.mo.gov/mhd/"},
-    "MT": {"name": "Montana",       "url": "https://dphhs.mt.gov/MontanaHealthcarePrograms/Medicaid"},
-    "NE": {"name": "Nebraska",      "url": "https://dhhs.ne.gov/Pages/Medicaid.aspx"},
-    "NV": {"name": "Nevada",        "url": "https://dhcfp.nv.gov/"},
-    "NH": {"name": "New Hampshire", "url": "https://www.dhhs.nh.gov/programs-services/medicaid"},
-    "NJ": {"name": "New Jersey",    "url": "https://www.state.nj.us/humanservices/dmahs/home/"},
-    "NM": {"name": "New Mexico",    "url": "https://www.hsd.state.nm.us/LookingForAssistance/medicaid.aspx"},
-    "NY": {"name": "New York",      "url": "https://www.health.ny.gov/health_care/medicaid/"},
-    "NC": {"name": "North Carolina","url": "https://medicaid.ncdhhs.gov/"},
-    "ND": {"name": "North Dakota",  "url": "https://www.hhs.nd.gov/healthcare/medicaid"},
-    "OH": {"name": "Ohio",          "url": "https://medicaid.ohio.gov/"},
-    "OK": {"name": "Oklahoma",      "url": "https://oklahoma.gov/ohca.html"},
-    "OR": {"name": "Oregon",        "url": "https://www.oregon.gov/oha/hsd/ohp/pages/index.aspx"},
-    "PA": {"name": "Pennsylvania",  "url": "https://www.dhs.pa.gov/Services/Assistance/Pages/MA-General-Info.aspx"},
-    "RI": {"name": "Rhode Island",  "url": "https://eohhs.ri.gov/programs-and-services/adults/medicaid"},
-    "SC": {"name": "South Carolina","url": "https://www.scdhhs.gov/"},
-    "SD": {"name": "South Dakota",  "url": "https://dss.sd.gov/medicaid/"},
-    "TN": {"name": "Tennessee",     "url": "https://www.tn.gov/tenncare.html"},
-    "TX": {"name": "Texas",         "url": "https://www.hhs.texas.gov/services/health/medicaid-chip"},
-    "UT": {"name": "Utah",          "url": "https://medicaid.utah.gov/"},
-    "VT": {"name": "Vermont",       "url": "https://dvha.vermont.gov/"},
-    "VA": {"name": "Virginia",      "url": "https://www.dmas.virginia.gov/"},
-    "WA": {"name": "Washington",    "url": "https://www.hca.wa.gov/apple-health"},
-    "WV": {"name": "West Virginia", "url": "https://dhhr.wv.gov/bms/Pages/default.aspx"},
-    "WI": {"name": "Wisconsin",     "url": "https://www.dhs.wisconsin.gov/medicaid/index.htm"},
-    "WY": {"name": "Wyoming",       "url": "https://health.wyo.gov/healthcarefin/medicaid/"},
-    "DC": {"name": "Washington DC", "url": "https://dhcf.dc.gov/"},
+    "AL": {"name": "Alabama",        "url": "https://medicaid.alabama.gov/"},
+    "AK": {"name": "Alaska",         "url": "https://health.alaska.gov/dsds/Pages/medicaid/default.aspx"},
+    "AZ": {"name": "Arizona",        "url": "https://www.healthearizonaplus.gov/"},
+    "AR": {"name": "Arkansas",       "url": "https://www.medicaid.state.ar.us/"},
+    "CA": {"name": "California",     "url": "https://www.dhcs.ca.gov/services/medi-cal/Pages/default.aspx"},
+    "CO": {"name": "Colorado",       "url": "https://hcpf.colorado.gov/health-first-colorado"},
+    "CT": {"name": "Connecticut",    "url": "https://www.ct.gov/dss/cwp/view.asp?a=2353&q=305172"},
+    "DE": {"name": "Delaware",       "url": "https://medicaid.dhss.delaware.gov/"},
+    "FL": {"name": "Florida",        "url": "https://www.flmedicaidmanagedcare.com/"},
+    "GA": {"name": "Georgia",        "url": "https://medicaid.georgia.gov/"},
+    "HI": {"name": "Hawaii",         "url": "https://medquest.hawaii.gov/"},
+    "ID": {"name": "Idaho",          "url": "https://healthandwelfare.idaho.gov/services-programs/medicaid"},
+    "IL": {"name": "Illinois",       "url": "https://hfs.illinois.gov/medicaid"},
+    "IN": {"name": "Indiana",        "url": "https://www.in.gov/medicaid/"},
+    "IA": {"name": "Iowa",           "url": "https://hhs.iowa.gov/programs/programs-and-services/medicaid"},
+    "KS": {"name": "Kansas",         "url": "https://www.kancare.ks.gov/"},
+    "KY": {"name": "Kentucky",       "url": "https://chfs.ky.gov/agencies/dms/Pages/default.aspx"},
+    "LA": {"name": "Louisiana",      "url": "https://ldh.la.gov/medicaid"},
+    "ME": {"name": "Maine",          "url": "https://www.maine.gov/dhhs/ofi/programs-services/mainecare"},
+    "MD": {"name": "Maryland",       "url": "https://mmcp.health.maryland.gov/"},
+    "MA": {"name": "Massachusetts",  "url": "https://www.mass.gov/masshealth"},
+    "MI": {"name": "Michigan",       "url": "https://www.michigan.gov/mdhhs/adult-child-serv/medicaid"},
+    "MN": {"name": "Minnesota",      "url": "https://mn.gov/dhs/people-we-serve/adults/health-care/health-care-programs/programs-and-services/medical-assistance.jsp"},
+    "MS": {"name": "Mississippi",    "url": "https://medicaid.ms.gov/"},
+    "MO": {"name": "Missouri",       "url": "https://dss.mo.gov/mhd/"},
+    "MT": {"name": "Montana",        "url": "https://dphhs.mt.gov/MontanaHealthcarePrograms/Medicaid"},
+    "NE": {"name": "Nebraska",       "url": "https://dhhs.ne.gov/Pages/Medicaid.aspx"},
+    "NV": {"name": "Nevada",         "url": "https://dhcfp.nv.gov/"},
+    "NH": {"name": "New Hampshire",  "url": "https://www.dhhs.nh.gov/programs-services/medicaid"},
+    "NJ": {"name": "New Jersey",     "url": "https://www.state.nj.us/humanservices/dmahs/home/"},
+    "NM": {"name": "New Mexico",     "url": "https://www.hsd.state.nm.us/LookingForAssistance/medicaid.aspx"},
+    "NY": {"name": "New York",       "url": "https://www.health.ny.gov/health_care/medicaid/"},
+    "NC": {"name": "North Carolina", "url": "https://medicaid.ncdhhs.gov/"},
+    "ND": {"name": "North Dakota",   "url": "https://www.hhs.nd.gov/healthcare/medicaid"},
+    "OH": {"name": "Ohio",           "url": "https://medicaid.ohio.gov/"},
+    "OK": {"name": "Oklahoma",       "url": "https://oklahoma.gov/ohca.html"},
+    "OR": {"name": "Oregon",         "url": "https://www.oregon.gov/oha/hsd/ohp/pages/index.aspx"},
+    "PA": {"name": "Pennsylvania",   "url": "https://www.dhs.pa.gov/Services/Assistance/Pages/MA-General-Info.aspx"},
+    "RI": {"name": "Rhode Island",   "url": "https://eohhs.ri.gov/programs-and-services/adults/medicaid"},
+    "SC": {"name": "South Carolina", "url": "https://www.scdhhs.gov/"},
+    "SD": {"name": "South Dakota",   "url": "https://dss.sd.gov/medicaid/"},
+    "TN": {"name": "Tennessee",      "url": "https://www.tn.gov/tenncare.html"},
+    "TX": {"name": "Texas",          "url": "https://www.hhs.texas.gov/services/health/medicaid-chip"},
+    "UT": {"name": "Utah",           "url": "https://medicaid.utah.gov/"},
+    "VT": {"name": "Vermont",        "url": "https://dvha.vermont.gov/"},
+    "VA": {"name": "Virginia",       "url": "https://www.dmas.virginia.gov/"},
+    "WA": {"name": "Washington",     "url": "https://www.hca.wa.gov/apple-health"},
+    "WV": {"name": "West Virginia",  "url": "https://dhhr.wv.gov/bms/Pages/default.aspx"},
+    "WI": {"name": "Wisconsin",      "url": "https://www.dhs.wisconsin.gov/medicaid/index.htm"},
+    "WY": {"name": "Wyoming",        "url": "https://health.wyo.gov/healthcarefin/medicaid/"},
+    "DC": {"name": "Washington DC",  "url": "https://dhcf.dc.gov/"},
 }
 
 STATE_NAME_TO_CODE = {}
@@ -69,19 +69,20 @@ for code, info in STATE_URLS.items():
     STATE_NAME_TO_CODE[info["name"].lower()] = code
     STATE_NAME_TO_CODE[code.lower()] = code
 
-# Topic shortcuts — only triggered for standalone short inputs
 TOPIC_SHORTCUTS = {
-    "ce":   {"match": "community engagement requirements",  "label": "Community Engagement Requirements"},
-    "oe":   {"match": "open enrollment deadlines",          "label": "Open Enrollment"},
-    "fpl":  {"match": "federal poverty level income limits","label": "Federal Poverty Level"},
-    "ptc":  {"match": "premium tax credit ACA marketplace", "label": "Premium Tax Credit"},
-    "csr":  {"match": "cost sharing reduction ACA",         "label": "Cost Sharing Reduction"},
+    "ce":  {"match": "community engagement requirements medicaid 2027", "label": "Community Engagement Requirements"},
+    "oe":  {"match": "ACA open enrollment deadlines dates",             "label": "Open Enrollment"},
+    "fpl": {"match": "federal poverty level income limits 2024",        "label": "Federal Poverty Level"},
+    "ptc": {"match": "premium tax credit ACA marketplace subsidy",      "label": "Premium Tax Credit"},
+    "csr": {"match": "cost sharing reduction silver plan ACA",          "label": "Cost Sharing Reduction"},
+    "sep": {"match": "special enrollment period qualifying life events", "label": "Special Enrollment Period"},
 }
 
 OUT_OF_SCOPE = [
-    "weather", "recipe", "sports", "movie", "song", "stock",
-    "crypto", "bitcoin", "dating", "travel", "hotel", "flight",
-    "restaurant", "game", "celebrity", "fashion", "shopping"
+    "weather", "recipe", "cooking", "sports", "movie", "song",
+    "stock market", "crypto", "bitcoin", "dating", "travel",
+    "hotel", "flight", "restaurant", "video game", "celebrity",
+    "fashion", "shopping", "politics"
 ]
 
 def load_knowledge_base():
@@ -105,29 +106,21 @@ def fetch_page_content(url, max_chars=3000):
         return None
 
 def detect_state(text):
-    """Detects US state from text. Returns 2-letter code or None."""
     text_lower = text.lower().strip()
-    # Direct 2-letter code
     if text_lower.upper() in STATE_URLS:
         return text_lower.upper()
-    # Full name match
     if text_lower in STATE_NAME_TO_CODE:
         return STATE_NAME_TO_CODE[text_lower]
-    # Partial match within sentence
     for name, code in STATE_NAME_TO_CODE.items():
         if len(name) > 2 and name in text_lower:
             return code
     return None
 
 def detect_intent(question):
-    """
-    Returns clarification only for standalone abbreviations (1 word).
-    Never triggers for full sentences.
-    """
+    """Only triggers for single-word abbreviations. Never for full sentences."""
     q = question.lower().strip()
     words = q.split()
 
-    # Only check shortcuts for single standalone words
     if len(words) == 1 and q in TOPIC_SHORTCUTS:
         shortcut = TOPIC_SHORTCUTS[q]
         return {
@@ -136,7 +129,6 @@ def detect_intent(question):
             "expanded_query": shortcut["match"]
         }
 
-    # Out of scope check
     for keyword in OUT_OF_SCOPE:
         if keyword in q:
             return {"type": "out_of_scope", "clarification": None, "expanded_query": None}
@@ -144,25 +136,28 @@ def detect_intent(question):
     return {"type": "clear", "clarification": None, "expanded_query": None}
 
 def identify_relevant_urls(question, knowledge_base):
-    question_lower = question.lower()
+    """Maps question to relevant official URLs to fetch."""
+    q = question.lower()
     source_urls = knowledge_base.get("source_urls", {})
-    matched_categories = set()
+    matched = set()
 
     keyword_map = {
         "community": ["community_engagement", "new_york"],
         "engagement": ["community_engagement", "new_york"],
-        "requirement": ["community_engagement"],
         "2027": ["community_engagement", "new_york"],
         "chip": ["chip"],
         "children": ["chip"],
         "child": ["chip"],
-        "kids": ["chip"],
+        "kid": ["chip"],
         "pregnant": ["pregnancy"],
         "pregnancy": ["pregnancy"],
+        "maternity": ["pregnancy"],
+        "baby": ["pregnancy"],
         "job loss": ["job_loss"],
         "lost job": ["job_loss"],
         "unemployed": ["job_loss"],
         "laid off": ["job_loss"],
+        "cobra": ["cobra"],
         "open enrollment": ["open_enrollment"],
         "deadline": ["open_enrollment"],
         "marketplace": ["aca_marketplace"],
@@ -170,20 +165,39 @@ def identify_relevant_urls(question, knowledge_base):
         "subsid": ["aca_marketplace"],
         "premium": ["aca_marketplace"],
         "tax credit": ["aca_marketplace"],
+        "silver plan": ["aca_marketplace"],
+        "bronze": ["aca_marketplace"],
+        "gold plan": ["aca_marketplace"],
+        "medicare": ["medicare"],
+        "part a": ["medicare"],
+        "part b": ["medicare"],
+        "part d": ["medicare"],
+        "turning 65": ["medicare"],
+        "veteran": ["va_health"],
+        "va health": ["va_health"],
+        "military": ["va_health"],
+        "mental health": ["mental_health"],
+        "substance": ["mental_health"],
+        "dental": ["dental_vision"],
+        "vision": ["dental_vision"],
+        "eye": ["dental_vision"],
+        "prescription": ["prescription_drugs"],
+        "medication": ["prescription_drugs"],
+        "drug coverage": ["prescription_drugs"],
     }
 
     for keyword, categories in keyword_map.items():
-        if keyword in question_lower:
+        if keyword in q:
             for cat in categories:
-                matched_categories.add(cat)
+                matched.add(cat)
 
-    if not matched_categories:
-        matched_categories.add("general_eligibility")
+    if not matched:
+        matched.add("general_eligibility")
 
     seen = set()
     urls = []
-    for category in matched_categories:
-        for url in source_urls.get(category, []):
+    for cat in matched:
+        for url in source_urls.get(cat, []):
             if url not in seen:
                 seen.add(url)
                 urls.append(url)
@@ -195,40 +209,55 @@ def build_system_prompt(knowledge_base, page_contents, state_code=None, last_top
 
     pages_section = ""
     if page_contents:
-        pages_section = "\n\nLIVE PAGE CONTENT (fetched from official government sources):\n"
+        pages_section = "\n\nLIVE PAGE CONTENT (fetched from official sources):\n"
         for url, content in page_contents.items():
             pages_section += f"\n--- FROM: {url} ---\n{content}\n"
 
-    context_instruction = ""
+    state_instruction = ""
     if state_code and state_code in STATE_URLS:
         state_name = STATE_URLS[state_code]["name"]
-        topic_context = f" specifically about: {last_topic}" if last_topic else ""
-        context_instruction = f"""
-The user is asking about {state_name}{topic_context}.
-IMPORTANT: Answer specifically for {state_name}. Use the live page content above.
-If the live page does not contain relevant information about the topic asked,
-clearly say: "I don't have specific information about that topic for {state_name}.
-Please visit {STATE_URLS[state_code]['url']} for the most accurate details."
-Do NOT give a generic answer when state-specific info is requested."""
+        topic_ctx = f" about: {last_topic}" if last_topic else ""
+        state_instruction = f"""
+The user is asking about {state_name}{topic_ctx}.
+Use the LIVE PAGE CONTENT to give {state_name}-specific details.
+If the live page does not contain specific information about this topic,
+say: "I was not able to find specific details about that topic for {state_name}.
+Here is what I know generally, and you can find more at {STATE_URLS[state_code]['url']}"
+Then provide the best general answer you can. NEVER give a dead-end response."""
 
-    return f"""You are a Benefits Eligibility Assistant specializing in U.S. health insurance programs.
-Your role is to help users understand eligibility for Medicaid, ACA Marketplace plans, and CHIP.
+    return f"""You are a comprehensive U.S. Healthcare Benefits Assistant.
+You help users understand ALL aspects of U.S. health coverage including:
+- Medicaid and CHIP (low-income coverage)
+- ACA Marketplace plans and subsidies
+- Medicare (65+ and disability coverage)
+- TRICARE (military coverage)
+- VA Health Care (veterans coverage)
+- COBRA continuation coverage
+- Special Enrollment Periods and life events
+- Mental health and substance use coverage
+- Dental, vision, and prescription drug coverage
+- State-specific health programs for all 50 states
+- Community engagement and work requirements
+- Federal Poverty Level calculations and eligibility
 
 KNOWLEDGE BASE:
 {kb_text}
 {pages_section}
 
-INSTRUCTIONS:
-1. PRIORITIZE LIVE PAGE CONTENT over knowledge base when available
-2. Be specific — include actual dates, income thresholds, requirements
-3. {context_instruction}
-4. After EVERY general answer (not state-specific), end with this exact line:
-   "If you'd like details for a specific state, just type the state name or abbreviation (e.g. NY, California)."
-5. End EVERY answer with a Sources section:
+CRITICAL INSTRUCTIONS:
+1. NEVER give a dead-end response. Always provide useful information even if limited.
+2. NEVER say you cannot modify your training data or add information — that is not relevant.
+3. NEVER say "I don't have information about that" without also providing your best answer.
+4. ALWAYS answer healthcare questions — you are knowledgeable about all U.S. health programs.
+5. PRIORITIZE live page content when available — quote specific rules, dates, and requirements.
+6. If state-specific info is unavailable from the live page, give the best general answer and provide the state URL.
+7. Detect the language of the question and respond in the SAME language automatically.
+8. After every general answer (no state specified), end with:
+   "For state-specific details, just type your state name or abbreviation (e.g. NY, California)."
+9. End EVERY answer with a Sources section:
    Sources:
    - https://example.gov/page
-6. If state-specific info is unavailable, say so clearly and provide the state's official URL
-7. Be empathetic and clear
+10. {state_instruction}
 
 Remember: General educational information only, not legal or medical advice."""
 
@@ -237,18 +266,14 @@ def get_ai_response(user_question, conversation_history, knowledge_base,
     page_contents = {}
 
     if state_code and state_code in STATE_URLS:
-        # Fetch the state's Medicaid page
         state_url = STATE_URLS[state_code]["url"]
-        print(f"\nFetching state page: {STATE_URLS[state_code]['name']}")
+        print(f"\nFetching: {STATE_URLS[state_code]['name']}")
         content = fetch_page_content(state_url)
         if content:
             page_contents[state_url] = content
-        else:
-            print(f"  Could not fetch {state_url}")
     else:
-        # Fetch topic-relevant pages
         relevant_urls = identify_relevant_urls(user_question, knowledge_base)
-        print(f"\nFetching {len(relevant_urls)} topic pages")
+        print(f"\nFetching {len(relevant_urls)} pages")
         for url in relevant_urls:
             content = fetch_page_content(url)
             if content:
@@ -266,7 +291,7 @@ def get_ai_response(user_question, conversation_history, knowledge_base,
         model="gpt-4o-mini",
         messages=messages,
         temperature=0.3,
-        max_tokens=900
+        max_tokens=1000
     )
 
     full_text = response.choices[0].message.content or ""

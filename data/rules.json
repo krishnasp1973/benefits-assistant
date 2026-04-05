@@ -18,38 +18,155 @@
       },
       "what_it_covers": [
         "Doctor visits", "Hospital stays", "Prescription drugs",
-        "Mental health services", "Preventive care", "Emergency services"
+        "Mental health services", "Preventive care", "Emergency services",
+        "Lab tests and X-rays", "Long-term care"
       ],
-      "how_to_apply": "Apply through your state's Medicaid agency or at healthcare.gov"
+      "how_to_apply": "Apply through your state Medicaid agency or at healthcare.gov"
     },
     "aca_marketplace": {
       "name": "ACA Health Insurance Marketplace",
-      "description": "Subsidized private insurance plans for people who don't qualify for Medicaid",
-      "federal_poverty_level_range": "100% to 400% FPL",
+      "description": "Subsidized private insurance plans for people who do not qualify for Medicaid",
+      "federal_poverty_level_range": "100% to 400% FPL for subsidies",
       "eligibility_rules": [
         "Must be a U.S. citizen or qualifying immigrant",
         "Must not have access to affordable employer-sponsored insurance",
         "Income between 100% and 400% FPL qualifies for premium tax credits",
-        "Open enrollment is typically November 1 to January 15",
+        "Open enrollment is November 1 through January 15",
         "Special enrollment periods available for life events"
       ],
-      "income_examples": {
-        "individual_subsidy_range": "$14,580 to $58,320/year (2024)",
-        "family_of_4_subsidy_range": "$30,000 to $120,000/year (2024)"
+      "plan_tiers": {
+        "bronze": "Lowest premium, highest out-of-pocket costs. Best if you rarely use healthcare.",
+        "silver": "Mid-range premium. Required for Cost Sharing Reductions (CSR). Best for most people.",
+        "gold": "Higher premium, lower out-of-pocket. Best if you use healthcare frequently.",
+        "platinum": "Highest premium, lowest out-of-pocket. Best for high healthcare users."
       },
       "how_to_apply": "Apply at healthcare.gov during open enrollment"
     },
     "chip": {
-      "name": "Children's Health Insurance Program (CHIP)",
-      "description": "Low-cost health coverage for children in families that earn too much for Medicaid",
+      "name": "Children's Health Insurance Program",
+      "description": "Low-cost coverage for children in families earning too much for Medicaid",
       "age_range": "Under 19 years old",
       "federal_poverty_level_threshold": "Up to 200% FPL in most states",
       "eligibility_rules": [
         "Child must be under 19 years old",
         "Most states cover children up to 200% FPL",
-        "Child must be a U.S. citizen or qualifying immigrant"
+        "Child must be a U.S. citizen or qualifying immigrant",
+        "Pregnant women may qualify in some states"
       ],
-      "how_to_apply": "Apply through your state's CHIP program or at insurekidsnow.gov"
+      "how_to_apply": "Apply at insurekidsnow.gov or your state CHIP program"
+    },
+    "medicare": {
+      "name": "Medicare",
+      "description": "Federal health insurance for people 65+ and certain younger people with disabilities",
+      "parts": {
+        "part_a": "Hospital insurance — covers inpatient hospital stays, skilled nursing facility, hospice. Most people get Part A premium-free.",
+        "part_b": "Medical insurance — covers doctor visits, outpatient care, preventive services. Standard premium is $174.70/month (2024).",
+        "part_c": "Medicare Advantage — private plans that bundle Parts A and B, often include Part D.",
+        "part_d": "Prescription drug coverage — offered through private insurers."
+      },
+      "eligibility": [
+        "Age 65 or older",
+        "Under 65 with certain disabilities after 24 months of Social Security Disability Insurance",
+        "Any age with End-Stage Renal Disease or ALS"
+      ],
+      "enrollment_periods": {
+        "initial": "7-month window starting 3 months before your 65th birthday month",
+        "general": "January 1 to March 31 each year",
+        "special": "Available for certain life events"
+      },
+      "how_to_apply": "Apply at ssa.gov or medicare.gov or call 1-800-MEDICARE"
+    },
+    "tricare": {
+      "name": "TRICARE",
+      "description": "Health coverage for military members, retirees, and their families",
+      "plans": [
+        "TRICARE Prime — HMO-style, lowest cost, requires referrals",
+        "TRICARE Select — PPO-style, more flexibility, higher cost",
+        "TRICARE for Life — Medicare supplement for military retirees with Medicare",
+        "TRICARE Reserve Select — for National Guard and Reserve members"
+      ],
+      "eligibility": [
+        "Active duty service members and their families",
+        "Retired service members and their families",
+        "National Guard and Reserve members (some plans)"
+      ],
+      "how_to_apply": "Visit tricare.mil or call 1-800-444-9445"
+    },
+    "va_health": {
+      "name": "VA Health Care",
+      "description": "Health benefits for Veterans through the Department of Veterans Affairs",
+      "eligibility": [
+        "Veterans who served in active military, naval, or air service",
+        "Discharged or released under conditions other than dishonorable",
+        "Priority groups 1-8 based on service-connected disabilities, income, and other factors"
+      ],
+      "what_it_covers": [
+        "Primary and preventive care",
+        "Mental health services including PTSD treatment",
+        "Substance use disorder treatment",
+        "Prescription medications",
+        "Surgery and specialty care",
+        "Women's health services",
+        "Dental care (limited eligibility)",
+        "Vision care (limited eligibility)"
+      ],
+      "how_to_apply": "Apply online at va.gov/health-care/apply or call 1-877-222-8387"
+    },
+    "cobra": {
+      "name": "COBRA Continuation Coverage",
+      "description": "Allows you to keep your employer health insurance for a limited time after losing coverage",
+      "eligibility_events": [
+        "Job loss (voluntary or involuntary, except for gross misconduct)",
+        "Reduction in work hours",
+        "Divorce or legal separation from covered employee",
+        "Death of covered employee",
+        "Dependent child aging off parent's plan"
+      ],
+      "duration": "Up to 18 months for job loss or reduced hours. Up to 36 months for other qualifying events.",
+      "cost": "You pay the full premium (employee + employer share) plus up to 2% administrative fee. This can be significantly more expensive than when employed.",
+      "deadline": "You have 60 days to elect COBRA after losing coverage",
+      "how_to_apply": "Contact your employer's HR department or plan administrator"
+    },
+    "marketplace_special_enrollment": {
+      "name": "Special Enrollment Period (SEP)",
+      "description": "A window outside open enrollment to sign up for ACA coverage after a qualifying life event",
+      "qualifying_events": [
+        "Loss of health coverage (job loss, aging off parent plan, loss of Medicaid)",
+        "Changes in household (marriage, divorce, birth, adoption)",
+        "Changes in residence (moving to a new coverage area)",
+        "Changes in income affecting eligibility",
+        "Gaining citizenship or lawful presence",
+        "Leaving incarceration"
+      ],
+      "window": "Generally 60 days from the qualifying event",
+      "how_to_apply": "Apply at healthcare.gov and select your qualifying event"
+    },
+    "community_engagement": {
+      "name": "Community Engagement Requirements",
+      "description": "Work or activity requirements being added to some state Medicaid programs",
+      "new_york_2027": {
+        "effective_date": "January 1, 2027",
+        "requirement": "80 hours per month of approved activities",
+        "approved_activities": [
+          "Employment (paid work)",
+          "Job training or workforce development",
+          "Education at least half-time",
+          "Volunteering or community service",
+          "Combination of the above"
+        ],
+        "exemptions": [
+          "Pregnant or postpartum (within 12 months)",
+          "Physical or mental health condition preventing work",
+          "Caring for a child under 14 or disabled family member",
+          "Age 65 or older",
+          "Enrolled in Medicare",
+          "American Indian or Alaska Native",
+          "Recently released from incarceration (90 days)",
+          "Former foster youth under age 26",
+          "Veterans with total disability",
+          "Enrolled in TANF or SNAP work programs"
+        ]
+      }
     }
   },
   "federal_poverty_levels_2024": {
@@ -58,7 +175,38 @@
     "household_size_3": 24860,
     "household_size_4": 30000,
     "household_size_5": 35140,
-    "household_size_6": 40280
+    "household_size_6": 40280,
+    "note": "Alaska and Hawaii have higher thresholds"
+  },
+  "life_events": {
+    "had_baby": {
+      "options": ["Add baby to existing insurance within 30-60 days", "Apply for Medicaid or CHIP for child", "Qualify for Special Enrollment Period on Marketplace"],
+      "deadline": "30-60 days from birth depending on your plan"
+    },
+    "lost_job": {
+      "options": ["COBRA continuation (up to 18 months)", "ACA Marketplace Special Enrollment Period (60 days)", "Medicaid if income drops below 138% FPL"],
+      "deadline": "60 days from job loss for SEP, 60 days for COBRA election"
+    },
+    "got_married": {
+      "options": ["Add spouse to employer plan within 30 days", "Apply together on Marketplace SEP", "Check joint Medicaid eligibility"],
+      "deadline": "30-60 days from marriage date"
+    },
+    "turned_26": {
+      "options": ["Get own employer coverage if available", "ACA Marketplace SEP (60 days)", "Medicaid if income qualifies"],
+      "deadline": "60 days from losing parent coverage"
+    },
+    "turning_65": {
+      "options": ["Enroll in Medicare Part A and B", "Consider Medicare Advantage (Part C)", "Add Part D for prescriptions"],
+      "deadline": "7-month Initial Enrollment Period around 65th birthday"
+    },
+    "pregnant": {
+      "options": ["Medicaid for pregnant women (higher income limits)", "CHIP for pregnant women in some states", "Marketplace plan with maternity coverage"],
+      "note": "Many states have expanded Medicaid eligibility specifically for pregnant women"
+    },
+    "disability": {
+      "options": ["Apply for SSDI (Social Security Disability Insurance)", "After 24 months on SSDI, automatically qualify for Medicare", "SSI recipients automatically get Medicaid in most states"],
+      "how_to_apply": "Apply at ssa.gov or call 1-800-772-1213"
+    }
   },
   "source_urls": {
     "general_eligibility": [
@@ -66,11 +214,21 @@
       "https://www.medicaid.gov/medicaid/eligibility/index.html"
     ],
     "aca_marketplace": [
-      "https://www.healthcare.gov/glossary/health-insurance-marketplace/",
-      "https://www.healthcare.gov/lower-costs/"
+      "https://www.healthcare.gov/lower-costs/",
+      "https://www.healthcare.gov/choose-a-plan/plans-categories/"
     ],
     "chip": [
       "https://www.insurekidsnow.gov/coverage/index.html"
+    ],
+    "medicare": [
+      "https://www.medicare.gov/sign-up-change-plans/how-do-i-get-parts-a-b",
+      "https://www.medicare.gov/basics/get-started-with-medicare"
+    ],
+    "va_health": [
+      "https://www.va.gov/health-care/eligibility/"
+    ],
+    "cobra": [
+      "https://www.dol.gov/sites/dolgov/files/ebsa/about-ebsa/our-activities/resource-center/faqs/cobra-continuation-health-coverage-consumer.pdf"
     ],
     "new_york": [
       "https://info.nystateofhealth.ny.gov/stay-covered",
@@ -89,6 +247,16 @@
     ],
     "job_loss": [
       "https://www.healthcare.gov/have-job-based-coverage/if-you-lose-job-based-coverage/"
+    ],
+    "mental_health": [
+      "https://www.healthcare.gov/coverage/mental-health-substance-abuse-coverage/"
+    ],
+    "dental_vision": [
+      "https://www.healthcare.gov/coverage/dental-coverage/",
+      "https://www.healthcare.gov/coverage/vision-coverage/"
+    ],
+    "prescription_drugs": [
+      "https://www.healthcare.gov/coverage/prescription-drug-coverage/"
     ]
   }
 }
